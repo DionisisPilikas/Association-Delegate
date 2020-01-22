@@ -37,18 +37,12 @@ namespace Association_And_delegate
         {
             Manager M1 = new Manager("John",3);
             Project P1 = new Project("A",2);
+            StringBuilder message1 = new StringBuilder(" is a successful manager");
+            StringBuilder message2 = new StringBuilder(" is not a successful manager");
 
-            Action<Project,Manager> ProjectRequirement = delegate (Project p,Manager m)
-            {
-                if(m.ManagerValue >= p.ProjectValue)
-                {
-                    Console.WriteLine($"{m.Name} is a successful manager");
-                }
-                else
-                {
-                    Console.WriteLine($"{m.Name} is not successful manager");
-                }
-            };
+            Action <Project, Manager> ProjectRequirement = (p, m) =>
+            Console.WriteLine(m.ManagerValue >= p.ProjectValue ? m.Name + message1 : m.Name + message2);
+
             ProjectRequirement(P1,M1);             
             //Benefit: we don't need functions inside the classes anymore
             Console.ReadKey();
