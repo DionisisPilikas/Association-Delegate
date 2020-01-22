@@ -19,8 +19,6 @@ namespace Association_And_delegate
             Name = name;
             ManagerValue = managerValue;
         }
-        //Benefit: we don't need the function below anymore
-        //public void EvaluateManager(Project p)=> p.ProjectRequirement(this);
     }
     class Project
     {
@@ -32,22 +30,27 @@ namespace Association_And_delegate
             Name = name;
             ProjectValue = projectValue;
         }
-        public void ProjectRequirement(Manager m) =>
-        Console.WriteLine(m.ManagerValue >= ProjectValue ? $"{m.Name} is a successful manager" : $"{m.Name} is not a successful manager");
     }
-    delegate void Evaluate(Manager m); //void type delegate whit a parameter typed Manager
-
     class Program
     {
         static void Main(string[] args)
         {
             Manager M1 = new Manager("John",3);
             Project P1 = new Project("A",2);
-            //Declaring delegate check, which points to the P1.ProjectRequirement Function
-            Evaluate check = P1.ProjectRequirement;
-            check(M1);
-             
 
+            Action<Project,Manager> ProjectRequirement = delegate (Project p,Manager m)
+            {
+                if(m.ManagerValue >= p.ProjectValue)
+                {
+                    Console.WriteLine($"{m.Name} is a successful manager");
+                }
+                else
+                {
+                    Console.WriteLine($"{m.Name} is not successful manager");
+                }
+            };
+            ProjectRequirement(P1,M1);             
+            //Benefit: we don't need functions inside the classes anymore
             Console.ReadKey();
         }
     }
